@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription %}
+    {{product.description|truncatewords:155}}
+{% endblock %}
+{% block title %}
+    {{product.name}} - E kart
+
+      see our new collections
+{% endblock %}
+{% block content %}
+<div class="row my_prdct_row_class">
+    <div class="mx_auto">
+        <p><a href="{% url 'shop:allprdctct' %}">Home</a>| <a href="{{product.category.get_url}}">{{product.category}}</a>|{{product.name}} </a></p>
+    </div>
+</div>
+<div class="conatainer">
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md 12 col-lg-6 text-center">
+            <div style="min-width:18rem">
+            <img src="{{product.image.url}}" alt="{{product.name}}">
+            </div><br>
+        </div>
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+            <div>
+            <h1 class="my_prdct_title">{{product.name}}</h1>
+            <p>{{product.price}}</p>
+                {% if product.stock <= 0 %}
+                    <p class="text-justify my_prdct_text" style="color:red;"><b>OUT OF STOCK</b> </p>
+                    <a class="btn btn-warning" href="#">NOTIFY ME</a>
+                {% else %}
+                    <a class="btn btn-secondary" href="{% url 'cart:add_cart' product.id %}">ADD TO CART</a>
+                {% endif %}
+                <br><br>
+            <p class="my_title">Product Description</p>
+            <p class="text-justify my_prdct_text">{{product.description}}</p>
+            </div><br>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
